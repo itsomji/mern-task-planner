@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 
-// Yahan apna Render wala live backend URL daal dena (jaise: https://mern-task-planner-xxxx.onrender.com)
-const API_BASE_URL = 'https://YOUR_BACKEND_URL.onrender.com';
+const API_BASE_URL = 'https://mern-task-planner-xxxx.onrender.com'; // Apna Render backend URL yahan daal lena
 
 function App() {
   const [tasks, setTasks] = useState([]);
@@ -49,6 +48,21 @@ function App() {
     }
   };
 
+  // Task Delete karne ka function
+  const handleDelete = async (id) => {
+    try {
+      const res = await fetch(`${API_BASE_URL}/api/tasks/${id}`, {
+        method: 'DELETE',
+      });
+
+      if (res.ok) {
+        fetchTasks();
+      }
+    } catch (err) {
+      console.error("Error deleting task:", err);
+    }
+  };
+
   return (
     <div style={{ padding: '20px', fontFamily: 'sans-serif', maxWidth: '600px', margin: '0 auto' }}>
       <h2>Task Planner Workshop</h2>
@@ -78,15 +92,24 @@ function App() {
             padding: '10px', 
             borderBottom: '1px solid #ccc',
             display: 'flex',
-            justifyContent: 'space-between'
+            justifyContent: 'space-between',
+            alignItems: 'center'
           }}>
             <span>{task.title}</span>
-            <span style={{ 
-              fontWeight: 'bold', 
-              color: task.priority === 'High' ? 'red' : task.priority === 'Medium' ? 'orange' : 'green' 
-            }}>
-              {task.priority}
-            </span>
+            <div style={{ display: 'flex', gap: '15px', alignItems: 'center' }}>
+              <span style={{ 
+                fontWeight: 'bold', 
+                color: task.priority === 'High' ? 'red' : task.priority === 'Medium' ? 'orange' : 'green' 
+              }}>
+                {task.priority}
+              </span>
+              <button 
+                onClick={() => handleDelete(task._id)}
+                style={{ background: '#ff4d4d', color: 'white', border: 'none', padding: '5px 10px', cursor: 'pointer', borderRadius: '4px' }}
+              >
+                Delete
+              </button>
+            </div>
           </li>
         ))}
       </ul>

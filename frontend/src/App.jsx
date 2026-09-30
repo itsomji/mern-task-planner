@@ -12,9 +12,15 @@ function App() {
     try {
       const res = await fetch(`${API_BASE_URL}/api/tasks`);
       const data = await res.json();
-      setTasks(data);
+      // Ensure data is always an array to prevent crashes
+      if (Array.isArray(data)) {
+        setTasks(data);
+      } else {
+        setTasks([]);
+      }
     } catch (err) {
       console.error("Error fetching tasks:", err);
+      setTasks([]);
     }
   };
 
@@ -48,7 +54,6 @@ function App() {
     }
   };
 
-  // Task Delete karne ka function
   const handleDelete = async (id) => {
     try {
       const res = await fetch(`${API_BASE_URL}/api/tasks/${id}`, {
@@ -87,7 +92,7 @@ function App() {
 
       <h3>My Pending Tasks</h3>
       <ul style={{ listStyle: 'none', padding: 0 }}>
-        {tasks.map(task => (
+        {Array.isArray(tasks) && tasks.map(task => (
           <li key={task._id} style={{ 
             padding: '10px', 
             borderBottom: '1px solid #ccc',

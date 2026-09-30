@@ -390,7 +390,7 @@
   color: #0f172a;
 }
 
-/* Time / Study Duration Section ("Kitne time padhna hai") */
+/* Target Study Duration Section */
 .duration-box {
   background: var(--surface-chip);
   border: 1px solid var(--border-subtle);
@@ -882,7 +882,7 @@
 }
 
 /* ========================================================================= */
-/* Interactive Focus Timer Modal ("Padhai Shuru Karo")                       */
+/* Interactive Focus Timer Modal (Focus Mode)                                */
 /* ========================================================================= */
 .modal-overlay {
   position: fixed;

@@ -312,7 +312,7 @@ function App() {
           <div className="stat-card">
             <div className="stat-icon time">⏱️</div>
             <div className="stat-info">
-              <div className="stat-label">Kitna Time Padhna Hai</div>
+              <div className="stat-label">Total Study Time</div>
               <div className="stat-value">{stats.formattedStudyTime}</div>
               <div className="stat-sub">Target study duration</div>
             </div>
@@ -383,11 +383,11 @@ function App() {
               </div>
             </div>
 
-            {/* "Kitne Time Padhna Hai" (Study Duration) Section */}
+            {/* Target Study Duration Section */}
             <div className="duration-box">
               <div className="duration-header">
                 <span className="duration-title">
-                  ⏱️ Kitne Time Padhna Hai? (Study Duration):
+                  ⏱️ Target Study Duration:
                 </span>
                 <span className="duration-active-badge">
                   🎯 Target: {duration} mins ({duration >= 60 ? `${(duration / 60).toFixed(1)} hrs` : `${duration} minutes`})
@@ -484,7 +484,7 @@ function App() {
               </div>
               <p className="empty-subtitle">
                 {tasks.length === 0
-                  ? 'Set your goals, choose kitne time padhna hai, and kickstart your focus session!'
+                  ? 'Set your study goals, choose your target duration, and kickstart your focus session!'
                   : 'Try clearing your search query or switching your active filter.'}
               </p>
             </div>
@@ -520,7 +520,7 @@ function App() {
                           {task.priority} Priority
                         </span>
                         <span className="duration-tag">
-                          ⏱️ {taskMinutes} min padhai
+                          ⏱️ {taskMinutes} min study
                         </span>
                       </div>
                     </div>
@@ -532,9 +532,9 @@ function App() {
                       type="button"
                       className="focus-btn"
                       onClick={() => openFocusTimer(task)}
-                      title="Padhai shuru karo (Open Focus Timer)"
+                      title="Start Focus Timer"
                     >
-                      <span>🚀</span> Padhna Shuru Karo
+                      <span>🚀</span> Start Focus
                     </button>
 
                     {/* Delete Button */}
@@ -543,7 +543,7 @@ function App() {
                       className="delete-btn"
                       onClick={() => handleDelete(taskId)}
                       aria-label="Delete task"
-                      title="Task delete karein"
+                      title="Delete task"
                     >
                       <span>🗑️</span> Delete
                     </button>
@@ -556,7 +556,7 @@ function App() {
       </main>
 
       {/* ========================================================================= */}
-      {/* Interactive Focus Timer Modal ("Padhai Shuru Karo" Mode)                   */}
+      {/* Interactive Focus Timer Modal (Focus Mode)                                */}
       {/* ========================================================================= */}
       {focusTask && (
         <div className="modal-overlay" onClick={closeFocusTimer}>

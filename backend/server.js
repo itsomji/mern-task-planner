@@ -3,19 +3,19 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 require('dotenv').config();
 
-// Task Model Import kiya
+// Import Task Model
 const Task = require('./models/Task');
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Basic check route
+// Basic health check route
 app.get('/', (req, res) => {
   res.send("Task Planner Backend is running!");
 });
 
-// POST Route: Naya Task Add karne ke liye (supports kitne time padhna hai)
+// POST Route: Add a new study task (supports title, priority, and study duration)
 app.post('/api/tasks', async (req, res) => {
   try {
     const { title, priority, duration } = req.body;
@@ -34,7 +34,7 @@ app.post('/api/tasks', async (req, res) => {
   }
 });
 
-// GET Route: Saare Tasks dekhne ke liye
+// GET Route: Fetch all study tasks
 app.get('/api/tasks', async (req, res) => {
   try {
     const tasks = await Task.find().sort({ createdAt: -1 });
@@ -44,7 +44,7 @@ app.get('/api/tasks', async (req, res) => {
   }
 });
 
-// PATCH Route: Task status update ya complete karne ke liye
+// PATCH Route: Update task or toggle completion status
 app.patch('/api/tasks/:id', async (req, res) => {
   try {
     const { id } = req.params;
@@ -60,7 +60,7 @@ app.patch('/api/tasks/:id', async (req, res) => {
   }
 });
 
-// DELETE Route: Task delete karne ke liye
+// DELETE Route: Delete a study task by ID
 app.delete('/api/tasks/:id', async (req, res) => {
   try {
     const { id } = req.params;

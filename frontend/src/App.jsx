@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 
-const API_BASE_URL = 'https://mern-task-planner-xxxx.onrender.com'; // Apna Render backend URL yahan daal lena
+const API_BASE_URL = 'https://mern-task-planner-1-iori.onrender.com';
 
 function App() {
   const [tasks, setTasks] = useState([]);

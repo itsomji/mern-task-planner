@@ -15,14 +15,18 @@ app.get('/', (req, res) => {
   res.send("Task Planner Backend is running!");
 });
 
-// POST Route: Naya Task Add karne ke liye
+// POST Route: Naya Task Add karne ke liye (supports kitne time padhna hai)
 app.post('/api/tasks', async (req, res) => {
   try {
-    const { title, priority } = req.body;
+    const { title, priority, duration } = req.body;
     if (!title || title.trim() === "") {
       return res.status(400).json({ error: "Title cannot be empty" });
     }
-    const newTask = new Task({ title, priority });
+    const newTask = new Task({
+      title: title.trim(),
+      priority: priority || 'Medium',
+      duration: duration ? Number(duration) : 30
+    });
     await newTask.save();
     res.status(201).json(newTask);
   } catch (err) {
@@ -33,10 +37,26 @@ app.post('/api/tasks', async (req, res) => {
 // GET Route: Saare Tasks dekhne ke liye
 app.get('/api/tasks', async (req, res) => {
   try {
-    const tasks = await Task.find();
+    const tasks = await Task.find().sort({ createdAt: -1 });
     res.status(200).json(tasks);
   } catch (err) {
     res.status(500).json({ error: "Server error while fetching tasks" });
+  }
+});
+
+// PATCH Route: Task status update ya complete karne ke liye
+app.patch('/api/tasks/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const updatedTask = await Task.findByIdAndUpdate(id, req.body, { new: true });
+
+    if (!updatedTask) {
+      return res.status(404).json({ error: 'Task not found' });
+    }
+
+    res.status(200).json(updatedTask);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to update task' });
   }
 });
 

@@ -40,6 +40,22 @@ app.get('/api/tasks', async (req, res) => {
   }
 });
 
+// DELETE Route: Task delete karne ke liye
+app.delete('/api/tasks/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deletedTask = await Task.findByIdAndDelete(id);
+
+    if (!deletedTask) {
+      return res.status(404).json({ error: 'Task not found' });
+    }
+
+    res.status(200).json({ message: 'Task deleted successfully' });
+  } catch (err) {
+    res.status(500).json({ error: 'Server error while deleting task' });
+  }
+});
+
 // Database Connection
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("Connected to MongoDB successfully!"))
@@ -49,15 +65,4 @@ mongoose.connect(process.env.MONGO_URI)
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
-});
-
-// Delete Task Route
-app.delete('/api/tasks/:id', async (req, res) => {
-  try {
-    const { id } = req.params;
-    await Task.findByIdAndDelete(id);
-    res.status(200).json({ message: 'Task deleted successfully' });
-  } catch (err) {
-    res.status(500).json({ error: 'Failed to delete task' });
-  }
 });
